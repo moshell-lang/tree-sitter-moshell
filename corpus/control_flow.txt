@@ -1,0 +1,138 @@
+===============================
+If expression
+===============================
+
+if grep found file {
+  echo present
+} else {
+  echo absent
+}
+
+---
+
+(source_file
+  (if
+    (command
+      (command_name
+        (identifier))
+      (word)
+      (word))
+    (block
+      (command
+        (command_name
+          (identifier))
+        (word)))
+    (block
+      (command
+        (command_name
+          (identifier))
+        (word)))))
+
+===============================
+While statement
+===============================
+
+val i = 0
+while $i < 10 {
+  i += 1
+}
+
+---
+
+(source_file
+  (variable_declaration
+    (identifier)
+    (primary
+      (number)))
+  (while
+    (infix_expression
+      (expansion
+        (variable
+          (identifier)))
+      (primary
+        (number)))
+    (block
+      (assignation
+        (identifier)
+        (primary
+          (number))))))
+
+===============================
+Function declaration
+===============================
+
+fun square(n: Int) -> Int = $n * $n
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_list
+      (function_parameter
+        (identifier)
+        (type_identifier
+          (identifier))))
+    (type_identifier
+      (identifier))
+    (infix_expression
+      (expansion
+        (variable
+          (identifier)))
+      (expansion
+        (variable
+          (identifier))))))
+
+===============================
+Implicit return
+===============================
+
+fun fibonacci(n: Int) -> Int =
+  if $n <= 1 {
+    1
+  } else {
+    fibonacci($n - 1) + fibonacci($n - 2)
+  }
+
+---
+
+(source_file
+  (function_declaration
+    (identifier)
+    (parameter_list
+      (function_parameter
+        (identifier)
+        (type_identifier
+          (identifier))))
+    (type_identifier
+      (identifier))
+    (if
+      (infix_expression
+        (expansion
+          (variable
+            (identifier)))
+        (primary
+          (number)))
+      (block
+        (primary
+          (number)))
+      (block
+        (infix_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (infix_expression
+                (expansion
+                  (variable
+                    (identifier)))
+                (primary
+                  (number)))))
+          (call_expression
+            (identifier)
+            (argument_list
+              (infix_expression
+                (expansion
+                  (variable
+                    (identifier)))
+                (primary
+                  (number))))))))))

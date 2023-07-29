@@ -1,0 +1,112 @@
+===============================
+Command
+===============================
+
+whoami
+
+---
+
+(source_file
+  (command (command_name (identifier))))
+
+===============================
+Command without trailing new line
+===============================
+
+echo hello
+---
+
+(source_file (command (command_name (identifier)) (word)))
+
+===============================
+Variable expansion
+===============================
+
+cat $FOO
+
+---
+
+(source_file
+  (command
+    (command_name (identifier))
+    (expansion (variable (identifier)))))
+
+===============================
+Redirection
+===============================
+
+cat file 2> /dev/null
+echo message >&2
+python <<< 'print("hello")'
+
+---
+
+(source_file
+  (command
+    (command_name
+      (identifier))
+    (word)
+    (word)
+    (redirection
+      (word)))
+  (command
+    (command_name
+      (identifier))
+    (word)
+    (redirection
+      (word)))
+  (command
+    (command_name
+      (identifier))
+    (redirection
+      (raw_string))))
+
+===============================
+Pipeline
+===============================
+
+cat path/to/file.txt | wc -l
+
+---
+
+(source_file
+  (pipeline
+    (command
+      (command_name
+        (identifier))
+      (word))
+    (command
+      (command_name
+        (identifier))
+      (word))))
+
+===============================
+String interpolation
+===============================
+
+echo "The result is $result"
+
+---
+
+(source_file
+  (command
+  (command_name
+    (identifier))
+  (template_string
+    (expansion
+      (variable
+        (identifier))))))
+
+===============================
+Negated command
+===============================
+
+! grep foo
+
+---
+
+(source_file
+  (command
+    (command_name
+      (identifier))
+    (word)))

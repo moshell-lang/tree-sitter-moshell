@@ -1,0 +1,11 @@
+Cargo.toml
+Cargo.lock
+node_modules
+build
+package-lock.json
+pnpm-lock.yaml
+/bindings/
+/src/
+/target/
+.build/
+binding.gyp
