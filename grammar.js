@@ -25,7 +25,6 @@ module.exports = grammar({
       $.variable_declaration,
       $._statement,
       $.return,
-      $.while,
       'break',
       'continue',
     ),
@@ -74,6 +73,7 @@ module.exports = grammar({
     _statement: $ => choice(
       $.command,
       $.pipeline,
+      $.while,
       seq('!', $.command),
       $._expression,
     ),
@@ -174,7 +174,7 @@ module.exports = grammar({
     line_comment: $ => token(seq('//', /.*/)),
     block_comment: $ => token(seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/')),
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
-    word: $ => /[^#'"\\\s$<>{}&;]+/,
+    word: $ => /[^#'"\\\s$<>{}&;()]+/,
     number: $ => /\d+/,
     boolean: $ => choice('true', 'false'),
     template_string: $ => seq(

@@ -110,3 +110,24 @@ Negated command
     (command_name
       (identifier))
     (word)))
+
+===============================
+Mix functions and commands
+===============================
+
+generate() | cut -d ' ' -f 1
+
+---
+
+(source_file
+  (pipeline
+    (call_expression
+      (identifier)
+      (argument_list))
+    (command
+      (command_name
+        (identifier))
+          (word)
+          (raw_string)
+          (word)
+          (word))))
