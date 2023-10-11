@@ -8,6 +8,7 @@ module.exports = grammar({
     $.line_comment,
     $.block_comment,
   ],
+  word: $ => $.identifier,
   rules: {
     source_file: $ => optional($._declarations),
 
@@ -94,6 +95,7 @@ module.exports = grammar({
       $.assignation,
       $.infix_expression,
       $.prefix_expression,
+      $.parentherized_expression,
       $.expansion,
       $.primary
     ),
@@ -140,6 +142,11 @@ module.exports = grammar({
       choice('!', '-'),
       $._expression
     )),
+    parentherized_expression: $ => seq(
+      '(',
+      $._expression,
+      ')'
+    ),
 
     expansion: $ => choice(
       $.variable,
